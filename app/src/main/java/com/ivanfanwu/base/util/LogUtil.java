@@ -1,133 +1,111 @@
 package com.ivanfanwu.base.util;
 
+import android.util.Log;
+
 /**
  * Created by ivanfanwu on 2017/8/5.
  */
 
 public class LogUtil {
     /**
-     * isPrint: print switch, true will print. false not print
+     * This flag to indicate the log is enabled or disabled.
      */
-    public static boolean isPrint = true;
-    private static String defaultTag = "Log";
+    private static boolean isLogEnable = true;
 
-    private LogUtil() {
-    }
-
-    public static void setTag(String tag) {
-        defaultTag = tag;
-    }
-
-    public static int i(Object o) {
-        return isPrint && o != null ? android.util.Log.i(defaultTag, o.toString()) : -1;
-    }
-
-    public static int i(String m) {
-        return isPrint && m != null ? android.util.Log.i(defaultTag, m) : -1;
+    /**
+     * Disable the log output.
+     */
+    public static void disableLog() {
+        isLogEnable = false;
     }
 
     /**
-     * ******************** Log **************************
+     * Enable the log output.
      */
-    public static int v(String tag, String msg) {
-        return isPrint && msg != null ? android.util.Log.v(tag, msg) : -1;
-    }
-
-    public static int d(String tag, String msg) {
-        return isPrint && msg != null ? android.util.Log.d(tag, msg) : -1;
-    }
-
-    public static int i(String tag, String msg) {
-        return isPrint && msg != null ? android.util.Log.i(tag, msg) : -1;
-    }
-
-    public static int w(String tag, String msg) {
-        return isPrint && msg != null ? android.util.Log.w(tag, msg) : -1;
-    }
-
-    public static int e(String tag, String msg) {
-        return isPrint && msg != null ? android.util.Log.e(tag, msg) : -1;
+    public static void enableLog() {
+        isLogEnable = true;
     }
 
     /**
-     * ******************** Log with object list **************************
+     * Debug
+     *
+     * @param tag
+     * @param msg
      */
-    public static int v(String tag, Object... msg) {
-        return isPrint ? android.util.Log.v(tag, getLogMessage(msg)) : -1;
-    }
-
-    public static int d(String tag, Object... msg) {
-        return isPrint ? android.util.Log.d(tag, getLogMessage(msg)) : -1;
-    }
-
-    public static int i(String tag, Object... msg) {
-        return isPrint ? android.util.Log.i(tag, getLogMessage(msg)) : -1;
-    }
-
-    public static int w(String tag, Object... msg) {
-        return isPrint ? android.util.Log.w(tag, getLogMessage(msg)) : -1;
-    }
-
-    public static int e(String tag, Object... msg) {
-        return isPrint ? android.util.Log.e(tag, getLogMessage(msg)) : -1;
-    }
-
-    private static String getLogMessage(Object... msg) {
-        if (msg != null && msg.length > 0) {
-            StringBuilder sb = new StringBuilder();
-            for (Object s : msg) {
-                if (s != null) {
-                    sb.append(s.toString());
-                }
-            }
-            return sb.toString();
+    public static void d(String tag, String msg) {
+        if (isLogEnable) {
+            StackTraceElement stackTraceElement = java.lang.Thread.currentThread().getStackTrace()[3];
+            Log.d(tag, rebuildMsg(stackTraceElement, msg));
         }
-        return "";
     }
 
     /**
-     * ******************** Log with Throwable **************************
+     * Information
+     *
+     * @param tag
+     * @param msg
      */
-    public static int v(String tag, String msg, Throwable tr) {
-        return isPrint && msg != null ? android.util.Log.v(tag, msg, tr) : -1;
-    }
-
-    public static int d(String tag, String msg, Throwable tr) {
-        return isPrint && msg != null ? android.util.Log.d(tag, msg, tr) : -1;
-    }
-
-    public static int i(String tag, String msg, Throwable tr) {
-        return isPrint && msg != null ? android.util.Log.i(tag, msg, tr) : -1;
-    }
-
-    public static int w(String tag, String msg, Throwable tr) {
-        return isPrint && msg != null ? android.util.Log.w(tag, msg, tr) : -1;
-    }
-
-    public static int e(String tag, String msg, Throwable tr) {
-        return isPrint && msg != null ? android.util.Log.e(tag, msg, tr) : -1;
+    public static void i(String tag, String msg) {
+        if (isLogEnable) {
+            StackTraceElement stackTraceElement = java.lang.Thread.currentThread().getStackTrace()[3];
+            Log.i(tag, rebuildMsg(stackTraceElement, msg));
+        }
     }
 
     /**
-     * ******************** TAG use Object Tag **************************
+     * Verbose
+     *
+     * @param tag
+     * @param msg
      */
-    public static int v(Object tag, String msg) {
-        return isPrint ? android.util.Log.v(tag.getClass().getSimpleName(), msg) : -1;
+    public static void v(String tag, String msg) {
+        if (isLogEnable) {
+            StackTraceElement stackTraceElement = java.lang.Thread.currentThread().getStackTrace()[3];
+            Log.v(tag, rebuildMsg(stackTraceElement, msg));
+        }
     }
 
-    public static int d(Object tag, String msg) {
-        return isPrint ? android.util.Log.d(tag.getClass().getSimpleName(), msg) : -1;
+    /**
+     * Warning
+     *
+     * @param tag
+     * @param msg
+     */
+    public static void w(String tag, String msg) {
+        if (isLogEnable) {
+            StackTraceElement stackTraceElement = java.lang.Thread.currentThread().getStackTrace()[3];
+            Log.w(tag, rebuildMsg(stackTraceElement, msg));
+        }
     }
 
-    public static int i(Object tag, String msg) {
-        return isPrint ? android.util.Log.i(tag.getClass().getSimpleName(), msg) : -1;
+    /**
+     * Error
+     *
+     * @param tag
+     * @param msg
+     */
+    public static void e(String tag, String msg) {
+        if (isLogEnable) {
+            StackTraceElement stackTraceElement = java.lang.Thread.currentThread().getStackTrace()[3];
+            Log.e(tag, rebuildMsg(stackTraceElement, msg));
+        }
     }
 
-    public static int w(Object tag, String msg) {
-        return isPrint ? android.util.Log.w(tag.getClass().getSimpleName(), msg) : -1;
-    }
-
-    public static int e(Object tag, String msg) {
-        return isPrint ? android.util.Log.e(tag.getClass().getSimpleName(), msg) : -1;
+    /**
+     * Rebuild Log Msg
+     *
+     * @param msg
+     * @return
+     */
+    private static String rebuildMsg(StackTraceElement stackTraceElement, String msg) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(stackTraceElement.getFileName());
+        sb.append(" (");
+        sb.append(stackTraceElement.getLineNumber());
+        sb.append(") ");
+        sb.append(stackTraceElement.getMethodName());
+        sb.append(": ");
+        sb.append(msg);
+        return sb.toString();
     }
 }

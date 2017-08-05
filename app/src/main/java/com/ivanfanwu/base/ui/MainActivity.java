@@ -1,4 +1,4 @@
-package com.ivanfanwu.base.module;
+package com.ivanfanwu.base.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
