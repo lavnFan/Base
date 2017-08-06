@@ -1,4 +1,4 @@
-package com.ivanfanwu.base.base;
+package com.ivanfanwu.base.base.mvp;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;

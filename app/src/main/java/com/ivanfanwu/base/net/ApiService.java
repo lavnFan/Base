@@ -16,6 +16,6 @@ import retrofit2.http.Path;
 public interface ApiService {
 
     @GET("users/{user}/repos")
-    void getListRepos(@Path("user") String user, Callback<List<Repo>> cb);
+    Call<List<Repo>> getListRepos(@Path("user") String user);
 
 }

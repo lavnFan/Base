@@ -1,4 +1,4 @@
-package com.ivanfanwu.base.base;
+package com.ivanfanwu.base.base.mvp;
 
 import android.content.Context;
 import android.support.v4.content.Loader;
